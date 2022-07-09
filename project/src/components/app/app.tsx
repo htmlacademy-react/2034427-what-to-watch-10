@@ -1,12 +1,11 @@
-import Main from '../../pages/main/main';
-import {PromoInfoType} from '../../types/types';
+import {Main} from '../../pages';
+import {PromoInfoType} from '../../types/common';
 
 type AppProps = {
   promoInfo: PromoInfoType
 }
 
 function App({promoInfo}: AppProps): JSX.Element {
-
   return (
     <Main promoInfo={promoInfo} />
   );

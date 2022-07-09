@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './components/app/app';
-import {PromoInfoType} from './types/types';
+import {App} from './components';
+import {PromoInfoType} from './types/common';
 
 const promoInfo: PromoInfoType = {
   name: 'The Grand Budapest Hotel',
