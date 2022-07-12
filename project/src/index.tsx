@@ -7,7 +7,7 @@ const promoInfo: PromoInfoType = {
   name: 'The Grand Budapest Hotel',
   genre: 'Drama',
   releaseDate: 2014,
-  poster: 'img/the-grand-budapest-hotel-poster.jpg',
+  posterSrc: 'img/the-grand-budapest-hotel-poster.jpg',
 };
 
 const root = ReactDOM.createRoot(
