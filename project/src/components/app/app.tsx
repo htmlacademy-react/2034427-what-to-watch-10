@@ -11,12 +11,14 @@ type AppProps = {
 }
 
 function App({promoInfo}: AppProps): JSX.Element {
-
   const authStatus = AuthStatus.Auth;
-
   const routes: RouteType[] = [
     {
       path: RouteName.Main,
+      element: <Main promoInfo={promoInfo}/>
+    },
+    {
+      path: RouteName.Genre,
       element: <Main promoInfo={promoInfo}/>
     },
     {
@@ -25,7 +27,11 @@ function App({promoInfo}: AppProps): JSX.Element {
     },
     {
       path: RouteName.MyList,
-      element: <PrivateRoute authStatus={authStatus}><MyList/></PrivateRoute>
+      element: (
+        <PrivateRoute authStatus={authStatus}>
+          <MyList/>
+        </PrivateRoute>
+      )
     },
     {
       path: RouteName.Film,
@@ -33,7 +39,11 @@ function App({promoInfo}: AppProps): JSX.Element {
     },
     {
       path: RouteName.AddReview,
-      element: <PrivateRoute authStatus={authStatus}><AddReview/></PrivateRoute>
+      element: (
+        <PrivateRoute authStatus={authStatus}>
+          <AddReview/>
+        </PrivateRoute>
+      )
     },
     {
       path: RouteName.Player,
@@ -48,9 +58,13 @@ function App({promoInfo}: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
-        {routes.map((route) =>
-          <Route key={route.path} path={route.path} element={route.element}/>
-        )}
+        {routes.map((route) => (
+          <Route
+            key={route.path}
+            path={route.path}
+            element={route.element}
+          />
+        ))}
       </Routes>
     </BrowserRouter>
   );

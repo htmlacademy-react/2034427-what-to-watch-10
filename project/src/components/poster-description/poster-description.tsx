@@ -1,4 +1,4 @@
-import {Link, useLocation} from 'react-router-dom';
+import {useMatch} from 'react-router-dom';
 import {RouteName} from '../../constants/route-name';
 
 type PosterDescriptionProps = {
@@ -8,9 +8,8 @@ type PosterDescriptionProps = {
 }
 
 function PosterDescription(props: PosterDescriptionProps): JSX.Element {
-
   const {name, genre, releaseDate} = props;
-  const location = useLocation();
+  const isFilmPath = useMatch(RouteName.Film);
 
   return (
     <div className="film-card__desc">
@@ -36,8 +35,8 @@ function PosterDescription(props: PosterDescriptionProps): JSX.Element {
           <span className="film-card__count">9</span>
         </button>
 
-        {location.pathname !== RouteName.Main &&
-          <Link to={RouteName.AddReview} className="btn film-card__button">Add review</Link>}
+        {isFilmPath &&
+          <button className="btn film-card__button">Add review</button>}
       </div>
     </div>
   );

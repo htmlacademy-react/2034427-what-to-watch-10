@@ -8,3 +8,6 @@ export {default as PosterDescription} from './poster-description/poster-descript
 export {default as GenreMenu} from './genre-menu/genre-menu';
 export {default as FilmMenu} from './film-menu/film-menu';
 export {default as RatingSelect} from './rating-select/rating-select';
+export {default as FilmOverview} from './film-overview/film-overview';
+export {default as FilmDetails} from './film-details/film-details';
+export {default as FilmReviews} from './film-reviews/film-reviews';

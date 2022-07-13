@@ -1,3 +1,5 @@
+import classNames from 'classnames';
+
 type FilmPosterProps = {
   posterSrc: string;
   posterTitle: string;
@@ -5,11 +7,10 @@ type FilmPosterProps = {
 }
 
 function Poster(props: FilmPosterProps): JSX.Element {
-
   const {posterSrc, posterTitle, className} = props;
 
   return (
-    <div className={`film-card__poster ${className || ''}`}>
+    <div className={classNames('film-card__poster', className)}>
       <img
         src={posterSrc}
         alt={posterTitle}
