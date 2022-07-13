@@ -1,4 +1,7 @@
 import {PropsWithChildren} from 'react';
+import {Link} from 'react-router-dom';
+import classNames from 'classnames';
+import {RouteName} from '../../constants/route-name';
 
 type HeaderProps = PropsWithChildren<{
   className?: string;
@@ -6,13 +9,13 @@ type HeaderProps = PropsWithChildren<{
 
 function Header({className, children}: HeaderProps): JSX.Element {
   return (
-    <header className={`page-header ${className || ''}`}>
+    <header className={classNames('page-header', className)}>
       <div className="logo">
-        <a href="/" className="logo__link">
+        <Link to={RouteName.Main} className="logo__link">
           <span className="logo__letter logo__letter--1">W</span>
           <span className="logo__letter logo__letter--2">T</span>
           <span className="logo__letter logo__letter--3">W</span>
-        </a>
+        </Link>
       </div>
 
       {children}
