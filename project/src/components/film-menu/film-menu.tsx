@@ -2,12 +2,9 @@ import {Link, useLocation} from 'react-router-dom';
 import classNames from 'classnames';
 import {TabName} from '../../pages/film/film';
 
-type FilmMenuProps = {
-  currentTab?: string|null;
-}
-
-function FilmMenu({currentTab}: FilmMenuProps): JSX.Element {
+function FilmMenu(): JSX.Element {
   const location = useLocation();
+  const tab = location.search.split('=')[1] ?? TabName.Overview;
 
   return (
     <nav className="film-nav film-card__nav">
@@ -15,11 +12,11 @@ function FilmMenu({currentTab}: FilmMenuProps): JSX.Element {
         <li
           className={classNames(
             'film-nav__item',
-            {'film-nav__item--active': currentTab === TabName.Overview}
+            {'film-nav__item--active': tab === TabName.Overview}
           )}
         >
           <Link
-            to={`${location.pathname}?tab=${TabName.Overview}`}
+            to={`?tab=${TabName.Overview}`}
             className="film-nav__link"
           >
             Overview
@@ -28,11 +25,11 @@ function FilmMenu({currentTab}: FilmMenuProps): JSX.Element {
         <li
           className={classNames(
             'film-nav__item',
-            {'film-nav__item--active': currentTab === TabName.Details}
+            {'film-nav__item--active': tab === TabName.Details}
           )}
         >
           <Link
-            to={`${location.pathname}?tab=${TabName.Details}`}
+            to={`?tab=${TabName.Details}`}
             className="film-nav__link"
           >
             Details
@@ -41,11 +38,11 @@ function FilmMenu({currentTab}: FilmMenuProps): JSX.Element {
         <li
           className={classNames(
             'film-nav__item',
-            {'film-nav__item--active': currentTab === TabName.Reviews}
+            {'film-nav__item--active': tab === TabName.Reviews}
           )}
         >
           <Link
-            to={`${location.pathname}?tab=${TabName.Reviews}`}
+            to={`?tab=${TabName.Reviews}`}
             className="film-nav__link"
           >
             Reviews

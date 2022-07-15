@@ -1,19 +1,25 @@
-import {FilmCard, Footer, GenreMenu, Header, Poster, PosterDescription} from '../../components';
-import {PromoInfoType} from '../../types/common';
+import {useParams} from 'react-router-dom';
+import {Footer, GenreMenu, Header, Poster, PosterDescription, FilmsList} from '../../components';
+import {FilmType} from '../../types/film';
 
 type MainProps = {
-  promoInfo: PromoInfoType;
+  promoFilm: FilmType;
+  films: FilmType[];
 }
 
-function Main({promoInfo}: MainProps): JSX.Element {
+function Main({promoFilm, films}: MainProps): JSX.Element {
+  const {id, name, genre, released, posterImage, backgroundImage} = promoFilm;
+  const {genreName} = useParams();
 
-  const {name, genre, releaseDate, posterSrc} = promoInfo;
+  const genreList = genreName
+    ? films.filter((item) => item.genre.toLowerCase() === genreName)
+    : films;
 
   return (
     <>
       <section className="film-card">
         <div className="film-card__bg">
-          <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel"/>
+          <img src={backgroundImage} alt={name}/>
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -22,9 +28,9 @@ function Main({promoInfo}: MainProps): JSX.Element {
 
         <div className="film-card__wrap">
           <div className="film-card__info">
-            <Poster posterSrc={posterSrc} posterTitle={name}/>
+            <Poster posterSrc={posterImage} posterTitle={name}/>
 
-            <PosterDescription name={name} genre={genre} releaseDate={releaseDate}/>
+            <PosterDescription id={id} name={name} genre={genre} releaseDate={released}/>
           </div>
         </div>
       </section>
@@ -32,11 +38,9 @@ function Main({promoInfo}: MainProps): JSX.Element {
       <div className="page-content">
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
-          <GenreMenu />
+          <GenreMenu genreName={genreName} />
 
-          <div className="catalog__films-list">
-            {[...Array(8).keys()].map((it) => <FilmCard key={it}/>)}
-          </div>
+          <FilmsList films={genreList} />
 
           <div className="catalog__more">
             <button className="catalog__button" type="button">Show more</button>

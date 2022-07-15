@@ -1,6 +1,10 @@
 import React from 'react';
 
-function RatingSelect(): JSX.Element {
+type RatingSelectProps = {
+  onChangeRating: (value: string) => void;
+}
+
+function RatingSelect({onChangeRating}: RatingSelectProps): JSX.Element {
   const ratings = [...Array(11).keys()]
     .slice(1)
     .reverse();
@@ -17,6 +21,7 @@ function RatingSelect(): JSX.Element {
                 type="radio"
                 name="rating"
                 value={item}
+                onChange={(evt) => onChangeRating(evt.target.value)}
                 defaultChecked={item === 8}
               />
               <label

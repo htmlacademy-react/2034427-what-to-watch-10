@@ -1,22 +1,15 @@
-import {Link, useParams} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import {RouteName} from '../../constants/route-name';
 import classNames from 'classnames';
+import {films} from '../../mocks/films';
+import {getGenres} from '../../utils/common';
 
-function GenreMenu(): JSX.Element {
+type GenreMenuProps = {
+  genreName?: string;
+}
 
-  const genres = [
-    'Comedies',
-    'Crime',
-    'Documentary',
-    'Dramas',
-    'Horror',
-    'Kids & Family',
-    'Romance',
-    'Sci-Fi',
-    'Thrillers'
-  ];
-
-  const {genreName} = useParams();
+function GenreMenu({genreName}: GenreMenuProps): JSX.Element {
+  const genres = getGenres(films);
 
   const getGenreRoute = (genre: string): string =>
     RouteName.Genre.replace(/:genreName/, genre.toLowerCase());

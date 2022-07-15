@@ -1,9 +1,31 @@
-function Player(): JSX.Element {
+import {Navigate, useNavigate, useParams} from 'react-router-dom';
+import {FilmType} from '../../types/film';
+import {RouteName} from '../../constants/route-name';
+
+type PlayerProps = {
+  films: FilmType[];
+}
+
+function Player({films}: PlayerProps): JSX.Element {
+  const navigate = useNavigate();
+  const {id} = useParams();
+  const film = id && films.find((item) => item.id === parseInt(id, 10));
+
+  if (!film) {
+    return <Navigate to={RouteName.NotFound} />;
+  }
+
   return (
     <div className="player">
-      <video src="#" className="player__video" poster="img/player-poster.jpg" />
+      <video src="#" className="player__video" poster={film.previewImage} />
 
-      <button type="button" className="player__exit">Exit</button>
+      <button
+        type="button"
+        onClick={() => navigate(-1)}
+        className="player__exit"
+      >
+        Exit
+      </button>
 
       <div className="player__controls">
         <div className="player__controls-row">

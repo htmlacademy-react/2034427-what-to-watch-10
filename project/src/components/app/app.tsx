@@ -1,25 +1,27 @@
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import {AddReview, Main, Movie, MyList, NotFound, Player, SignIn} from '../../pages';
 import {PrivateRoute} from '../';
-import {PromoInfoType} from '../../types/common';
 import {RouteName} from '../../constants/route-name';
 import {AuthStatus} from '../../constants/auth-status';
 import {RouteType} from '../../types/route-type';
+import {FilmType} from '../../types/film';
 
 type AppProps = {
-  promoInfo: PromoInfoType
+  promoFilm: FilmType,
+  films: FilmType[],
+  similarFilms: FilmType[],
 }
 
-function App({promoInfo}: AppProps): JSX.Element {
+function App({promoFilm, films, similarFilms}: AppProps): JSX.Element {
   const authStatus = AuthStatus.Auth;
   const routes: RouteType[] = [
     {
       path: RouteName.Main,
-      element: <Main promoInfo={promoInfo}/>
+      element: <Main promoFilm={promoFilm} films={films}/>
     },
     {
       path: RouteName.Genre,
-      element: <Main promoInfo={promoInfo}/>
+      element: <Main promoFilm={promoFilm} films={films}/>
     },
     {
       path: RouteName.SignIn,
@@ -29,13 +31,13 @@ function App({promoInfo}: AppProps): JSX.Element {
       path: RouteName.MyList,
       element: (
         <PrivateRoute authStatus={authStatus}>
-          <MyList/>
+          <MyList films={films}/>
         </PrivateRoute>
       )
     },
     {
       path: RouteName.Film,
-      element: <Movie/>
+      element: <Movie similarFilms={similarFilms}/>
     },
     {
       path: RouteName.AddReview,
@@ -47,7 +49,7 @@ function App({promoInfo}: AppProps): JSX.Element {
     },
     {
       path: RouteName.Player,
-      element: <Player/>
+      element: <Player films={films}/>
     },
     {
       path: RouteName.NotFound,
