@@ -1,19 +1,18 @@
 import {Header, Poster, CommentForm} from '../../components';
 import {Link, Navigate, useParams} from 'react-router-dom';
-import {films} from '../../mocks/films';
 import {RouteName} from '../../constants/route-name';
+import {getAddReviewUrl, getFilmUrl} from '../../utils/route';
+import {getFilm} from '../../utils/common';
 
 function AddReview(): JSX.Element {
-  const {id} = useParams();
-
-  const film = id
-    && films.find((item) => item.id === parseInt(id, 10));
+  const params = useParams();
+  const film = getFilm(params.id as string);
 
   if (!film) {
     return <Navigate to={RouteName.NotFound} />;
   }
 
-  const {name, posterImage} = film;
+  const {id, name, posterImage} = film;
 
   return (
     <section className="film-card film-card--full">
@@ -29,7 +28,7 @@ function AddReview(): JSX.Element {
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
                 <Link
-                  to={RouteName.Film.replace(/:id/, String(id))}
+                  to={getFilmUrl(id)}
                   className="breadcrumbs__link"
                 >
                   {name}
@@ -37,7 +36,7 @@ function AddReview(): JSX.Element {
               </li>
               <li className="breadcrumbs__item">
                 <Link
-                  to={RouteName.AddReview.replace(/:id/, String(id))}
+                  to={getAddReviewUrl(id)}
                   className="breadcrumbs__link"
                 >
                   Add review

@@ -20,7 +20,7 @@ function App({promoFilm, films, similarFilms}: AppProps): JSX.Element {
       element: <Main promoFilm={promoFilm} films={films}/>
     },
     {
-      path: RouteName.Genre,
+      path: RouteName.Genre.path,
       element: <Main promoFilm={promoFilm} films={films}/>
     },
     {
@@ -36,11 +36,11 @@ function App({promoFilm, films, similarFilms}: AppProps): JSX.Element {
       )
     },
     {
-      path: RouteName.Film,
+      path: RouteName.Film.path,
       element: <Movie similarFilms={similarFilms}/>
     },
     {
-      path: RouteName.AddReview,
+      path: RouteName.AddReview.path,
       element: (
         <PrivateRoute authStatus={authStatus}>
           <AddReview/>
@@ -48,8 +48,8 @@ function App({promoFilm, films, similarFilms}: AppProps): JSX.Element {
       )
     },
     {
-      path: RouteName.Player,
-      element: <Player films={films}/>
+      path: RouteName.Player.path,
+      element: <Player/>
     },
     {
       path: RouteName.NotFound,

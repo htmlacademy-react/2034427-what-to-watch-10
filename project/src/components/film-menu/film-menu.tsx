@@ -1,10 +1,10 @@
-import {Link, useLocation} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import classNames from 'classnames';
 import {TabName} from '../../pages/film/film';
+import {getFilmTab} from '../../utils/common';
 
 function FilmMenu(): JSX.Element {
-  const location = useLocation();
-  const tab = location.search.split('=')[1] ?? TabName.Overview;
+  const tab = getFilmTab();
 
   return (
     <nav className="film-nav film-card__nav">

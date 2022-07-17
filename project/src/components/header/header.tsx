@@ -1,5 +1,5 @@
 import {PropsWithChildren} from 'react';
-import {Link, useNavigate} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import classNames from 'classnames';
 import {RouteName} from '../../constants/route-name';
 
@@ -8,8 +8,6 @@ type HeaderProps = PropsWithChildren<{
 }>
 
 function Header({className, children}: HeaderProps): JSX.Element {
-  const navigate = useNavigate();
-
   return (
     <header className={classNames('page-header', className)}>
       <div className="logo">
@@ -24,12 +22,12 @@ function Header({className, children}: HeaderProps): JSX.Element {
 
       <ul className="user-block">
         <li className="user-block__item">
-          <div
+          <Link
+            to={RouteName.MyList}
             className="user-block__avatar"
-            onClick={() => navigate(RouteName.MyList)}
           >
             <img src="img/avatar.jpg" alt="User avatar" width="63" height="63"/>
-          </div>
+          </Link>
         </li>
         <li className="user-block__item">
           <a href="/" className="user-block__link">Sign out</a>

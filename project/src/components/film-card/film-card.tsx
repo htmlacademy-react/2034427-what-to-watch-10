@@ -1,19 +1,18 @@
 import {Link} from 'react-router-dom';
 import classNames from 'classnames';
 import {FilmType} from '../../types/film';
-import {RouteName} from '../../constants/route-name';
+import {getFilmUrl} from '../../utils/route';
 
 type FilmCardProps = {
   film: FilmType;
-  activeCard: number|null;
-  handleCardMouseOver: (id: number) => void;
-  handleCardMouseOut: () => void;
+  activeCard: number | null;
+  onMouseEnter: (id: number) => void;
+  onMouseLeave: () => void;
 }
 
 function FilmCard(props: FilmCardProps): JSX.Element {
-  const {film, activeCard, handleCardMouseOver, handleCardMouseOut} = props;
+  const {film, activeCard, onMouseEnter, onMouseLeave} = props;
   const {id, previewImage, name} = film;
-  const playerUrl = RouteName.Film.replace(/:id/, String(id));
 
   return (
     <article
@@ -24,8 +23,8 @@ function FilmCard(props: FilmCardProps): JSX.Element {
           {'active': activeCard === id}
         )
       }
-      onMouseOver={() => handleCardMouseOver(id)}
-      onMouseOut={handleCardMouseOut}
+      onMouseEnter={() => onMouseEnter(id)}
+      onMouseLeave={onMouseLeave}
     >
       <div className="small-film-card__image">
         <img
@@ -37,7 +36,10 @@ function FilmCard(props: FilmCardProps): JSX.Element {
       </div>
 
       <h3 className="small-film-card__title">
-        <Link to={playerUrl} className="small-film-card__link">
+        <Link
+          to={getFilmUrl(id)}
+          className="small-film-card__link"
+        >
           {name}
         </Link>
       </h3>

@@ -1,6 +1,5 @@
 import {RatingSelect} from '../index';
-import {FormEvent, useState} from 'react';
-import {NewCommentType} from '../../types/reviews';
+import {useState} from 'react';
 
 function CommentForm(): JSX.Element {
   const [comment, setComment] = useState<string>('');
@@ -10,20 +9,14 @@ function CommentForm(): JSX.Element {
     setRating(parseInt(value, 10));
   };
 
-  const handleSubmit = (evt: FormEvent) => {
-    evt.preventDefault();
-    const formData: NewCommentType = {comment, rating};
-    // eslint-disable-next-line
-    alert(JSON.stringify(formData));
-  };
-
   return (
     <div className="add-review">
-      <form action="#" className="add-review__form" onSubmit={(evt) => handleSubmit(evt)}>
-        <RatingSelect onChangeRating={handleSetRating}/>
+      <form action="#" className="add-review__form">
+        <RatingSelect rating={rating} onChangeRating={handleSetRating}/>
 
         <div className="add-review__text">
           <textarea
+            value={comment}
             className="add-review__textarea"
             name="review-text"
             id="review-text"
@@ -31,7 +24,7 @@ function CommentForm(): JSX.Element {
             placeholder="Review text"
           />
           <div className="add-review__submit">
-            <button className="add-review__btn" type="submit">Post</button>
+            <button className="add-review__btn">Post</button>
           </div>
         </div>
       </form>

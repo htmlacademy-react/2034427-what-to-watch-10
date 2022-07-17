@@ -1,8 +1,8 @@
-import {Navigate, useParams, useSearchParams} from 'react-router-dom';
+import {Navigate, useParams} from 'react-router-dom';
 import {Header, Footer, Poster, PosterDescription, FilmMenu, FilmDetails, FilmOverview, FilmReviews, FilmsList} from '../../components';
 import {FilmType} from '../../types/film';
-import {films} from '../../mocks/films';
 import {RouteName} from '../../constants/route-name';
+import {getFilm, getFilmTab} from '../../utils/common';
 
 export enum TabName {
   Overview = 'overview',
@@ -15,16 +15,15 @@ type FilmProps = {
 }
 
 function Film({similarFilms}: FilmProps): JSX.Element {
-  const {id} = useParams();
-  const [searchParams] = useSearchParams({tab: 'overview'});
-  const currentTab = searchParams.get('tab');
-  const film = id && films.find((item) => item.id === parseInt(id, 10));
+  const tab = getFilmTab();
+  const params = useParams();
+  const film = getFilm(params.id as string);
 
   if (!film) {
     return <Navigate to={RouteName.NotFound} />;
   }
 
-  const {name, genre, released, posterImage, backgroundImage} = film;
+  const {id, name, genre, released, posterImage, backgroundImage} = film;
 
   return (
     <>
@@ -39,7 +38,7 @@ function Film({similarFilms}: FilmProps): JSX.Element {
           <Header className="film-card__head"/>
 
           <div className="film-card__wrap">
-            <PosterDescription id={film.id} name={name} genre={genre} releaseDate={released}/>
+            <PosterDescription id={id} name={name} genre={genre} releaseDate={released}/>
           </div>
         </div>
 
@@ -55,17 +54,17 @@ function Film({similarFilms}: FilmProps): JSX.Element {
               <FilmMenu />
 
               {
-                currentTab === TabName.Overview &&
+                tab === TabName.Overview &&
                 <FilmOverview film={film} />
               }
 
               {
-                currentTab === TabName.Details &&
+                tab === TabName.Details &&
                 <FilmDetails film={film} />
               }
 
               {
-                currentTab === TabName.Reviews &&
+                tab === TabName.Reviews &&
                 <FilmReviews />
               }
             </div>

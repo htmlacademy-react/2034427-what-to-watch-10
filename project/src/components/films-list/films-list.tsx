@@ -9,10 +9,10 @@ type FilmsListProps = {
 function FilmsList({films}: FilmsListProps): JSX.Element {
   const [activeCard, setActiveCard] = useState<number | null>(null);
 
-  const handleCardMouseOver = (cardId: number): void =>
-    setActiveCard(cardId);
+  const handleSetActive = (id: number) =>
+    setActiveCard(id);
 
-  const handleCardMouseOut = (): void =>
+  const handleSetNoActive = () =>
     setActiveCard(null);
 
   return (
@@ -23,8 +23,8 @@ function FilmsList({films}: FilmsListProps): JSX.Element {
             key={film.id}
             film={film}
             activeCard={activeCard}
-            handleCardMouseOver={handleCardMouseOver}
-            handleCardMouseOut={handleCardMouseOut}
+            onMouseEnter={handleSetActive}
+            onMouseLeave={handleSetNoActive}
           />
         )
       )}

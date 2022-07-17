@@ -12,6 +12,6 @@ export type ReviewType = {
 }
 
 export type NewCommentType = {
-  comment: string
-  rating: number
+  comment: string;
+  rating: number;
 }

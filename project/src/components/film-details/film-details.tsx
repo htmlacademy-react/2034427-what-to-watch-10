@@ -6,7 +6,6 @@ type FilmDetailsProps = {
 
 function FilmDetails({film}: FilmDetailsProps): JSX.Element {
   const {director, starring, runTime, genre, released} = film;
-  const htmlStarring = starring.map((item) => item).join(',<br/>');
 
   return (
     <div className="film-card__text film-card__row">
@@ -17,10 +16,9 @@ function FilmDetails({film}: FilmDetailsProps): JSX.Element {
         </p>
         <p className="film-card__details-item">
           <strong className="film-card__details-name">Starring</strong>
-          <span
-            className="film-card__details-value"
-            dangerouslySetInnerHTML={{__html: htmlStarring}}
-          />
+          <span className="film-card__details-value">
+            {starring.map((item) => item).join(', ')}
+          </span>
         </p>
       </div>
 

@@ -1,5 +1,6 @@
-import {useMatch, useNavigate} from 'react-router-dom';
+import {Link, useMatch} from 'react-router-dom';
 import {RouteName} from '../../constants/route-name';
+import {getAddReviewUrl, getPlayerUrl} from '../../utils/route';
 
 type PosterDescriptionProps = {
   id: number;
@@ -10,7 +11,6 @@ type PosterDescriptionProps = {
 
 function PosterDescription(props: PosterDescriptionProps): JSX.Element {
   const {id, name, genre, releaseDate} = props;
-  const navigate = useNavigate();
   const isFilmPath = useMatch(RouteName.Film);
 
   return (
@@ -22,8 +22,8 @@ function PosterDescription(props: PosterDescriptionProps): JSX.Element {
       </p>
 
       <div className="film-card__buttons">
-        <button
-          onClick={() => navigate(RouteName.Player.replace(/:id/, String(id)))}
+        <Link
+          to={getPlayerUrl(id)}
           className="btn btn--play film-card__button"
           type="button"
         >
@@ -31,8 +31,7 @@ function PosterDescription(props: PosterDescriptionProps): JSX.Element {
             <use xlinkHref="#play-s"/>
           </svg>
           <span>Play</span>
-        </button>
-
+        </Link>
         <button
           className="btn btn--list film-card__button"
           type="button"
@@ -45,12 +44,12 @@ function PosterDescription(props: PosterDescriptionProps): JSX.Element {
         </button>
 
         {isFilmPath &&
-        <button
-          onClick={() => navigate(RouteName.AddReview.replace(/:id/, String(id)))}
+        <Link
+          to={getAddReviewUrl(id)}
           className="btn film-card__button"
         >
           Add review
-        </button>}
+        </Link>}
       </div>
     </div>
   );

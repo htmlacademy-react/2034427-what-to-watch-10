@@ -1,13 +1,14 @@
 import {FilmType} from '../types/film';
+import {films} from '../mocks/films';
+import {TabName} from '../pages/film/film';
 
-const MAX_COUNT_GENRES = 9;
+export const getGenres = (filmList: FilmType[]): string[] =>
+  [ ...new Set(filmList.map((film) => film.genre))];
 
-export const getGenres = (filmList: FilmType[]): string[] => {
-  const result = [
-    ...new Set(filmList.map((film) => film.genre))
-  ];
+export const getFilm = (id: string) =>
+  films.find((item) => item.id === parseInt(id, 10));
 
-  return result.length > MAX_COUNT_GENRES
-    ? result.slice(0, MAX_COUNT_GENRES)
-    : result;
+export const getFilmTab = () => {
+  const queryParams = (new URL(document.location.href)).searchParams;
+  return queryParams.get('tab') ?? TabName.Overview;
 };

@@ -5,18 +5,20 @@ type ReviewProps = {
 }
 
 function Review({review}: ReviewProps): JSX.Element {
+  const {comment, rating, date, user} = review;
+
   return (
     <div className="review">
       <blockquote className="review__quote">
-        <p className="review__text">{review.comment}</p>
+        <p className="review__text">{comment}</p>
 
         <footer className="review__details">
-          <cite className="review__author">{review.user.name}</cite>
-          <time className="review__date" dateTime="2015-11-18">{review.date}</time>
+          <cite className="review__author">{user.name}</cite>
+          <time className="review__date" dateTime="2015-11-18">{date}</time>
         </footer>
       </blockquote>
 
-      <div className="review__rating">{review.rating.toFixed(1)}</div>
+      <div className="review__rating">{rating}</div>
     </div>
   );
 }
