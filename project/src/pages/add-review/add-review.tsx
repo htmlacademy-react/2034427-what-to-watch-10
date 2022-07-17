@@ -1,6 +1,19 @@
-import {Header, Poster, RatingSelect} from '../../components';
+import {Header, Poster, CommentForm} from '../../components';
+import {Link, Navigate, useParams} from 'react-router-dom';
+import {RouteName} from '../../constants/route-name';
+import {getAddReviewUrl, getFilmUrl} from '../../utils/route';
+import {getFilm} from '../../utils/common';
 
 function AddReview(): JSX.Element {
+  const params = useParams();
+  const film = getFilm(params.id as string);
+
+  if (!film) {
+    return <Navigate to={RouteName.NotFound} />;
+  }
+
+  const {id, name, posterImage} = film;
+
   return (
     <section className="film-card film-card--full">
       <div className="film-card__header">
@@ -14,10 +27,20 @@ function AddReview(): JSX.Element {
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
-                <a href="film-page.html" className="breadcrumbs__link">The Grand Budapest Hotel</a>
+                <Link
+                  to={getFilmUrl(id)}
+                  className="breadcrumbs__link"
+                >
+                  {name}
+                </Link>
               </li>
               <li className="breadcrumbs__item">
-                <a href="/" className="breadcrumbs__link">Add review</a>
+                <Link
+                  to={getAddReviewUrl(id)}
+                  className="breadcrumbs__link"
+                >
+                  Add review
+                </Link>
               </li>
             </ul>
           </nav>
@@ -25,29 +48,12 @@ function AddReview(): JSX.Element {
 
         <Poster
           className="film-card__poster--small"
-          posterSrc="img/the-grand-budapest-hotel-poster.jpg"
-          posterTitle="The Grand Budapest Hotel poster"
+          posterSrc={posterImage}
+          posterTitle={name}
         />
       </div>
 
-      <div className="add-review">
-        <form action="#" className="add-review__form">
-          <RatingSelect />
-
-          <div className="add-review__text">
-            <textarea
-              className="add-review__textarea"
-              name="review-text"
-              id="review-text"
-              placeholder="Review text"
-            />
-            <div className="add-review__submit">
-              <button className="add-review__btn" type="submit">Post</button>
-            </div>
-          </div>
-
-        </form>
-      </div>
+      <CommentForm />
     </section>
   );
 }

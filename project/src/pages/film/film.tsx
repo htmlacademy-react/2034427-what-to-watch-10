@@ -1,8 +1,8 @@
-import {FilmCard, Header, Footer, Poster, PosterDescription, FilmMenu} from '../../components';
-import {useSearchParams} from 'react-router-dom';
-import {FilmDetails} from '../../components';
-import {FilmOverview} from '../../components';
-import {FilmReviews} from '../../components';
+import {Navigate, useParams} from 'react-router-dom';
+import {Header, Footer, Poster, PosterDescription, FilmMenu, FilmDetails, FilmOverview, FilmReviews, FilmsList} from '../../components';
+import {FilmType} from '../../types/film';
+import {RouteName} from '../../constants/route-name';
+import {getFilm, getFilmTab} from '../../utils/common';
 
 export enum TabName {
   Overview = 'overview',
@@ -10,16 +10,27 @@ export enum TabName {
   Reviews = 'reviews',
 }
 
-function Film(): JSX.Element {
-  const [searchParams] = useSearchParams({tab: 'overview'});
-  const currentTab = searchParams.get('tab');
+type FilmProps = {
+  similarFilms: FilmType[],
+}
+
+function Film({similarFilms}: FilmProps): JSX.Element {
+  const tab = getFilmTab();
+  const params = useParams();
+  const film = getFilm(params.id as string);
+
+  if (!film) {
+    return <Navigate to={RouteName.NotFound} />;
+  }
+
+  const {id, name, genre, released, posterImage, backgroundImage} = film;
 
   return (
     <>
       <section className="film-card film-card--full">
         <div className="film-card__hero">
           <div className="film-card__bg">
-            <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel"/>
+            <img src={backgroundImage} alt="The Grand Budapest Hotel"/>
           </div>
 
           <h1 className="visually-hidden">WTW</h1>
@@ -27,33 +38,33 @@ function Film(): JSX.Element {
           <Header className="film-card__head"/>
 
           <div className="film-card__wrap">
-            <PosterDescription name="The Grand Budapest Hotel" genre="Drama" releaseDate={2014}/>
+            <PosterDescription id={id} name={name} genre={genre} releaseDate={released}/>
           </div>
         </div>
 
         <div className="film-card__wrap film-card__translate-top">
           <div className="film-card__info">
             <Poster
-              posterSrc="img/the-grand-budapest-hotel-poster.jpg"
+              posterSrc={posterImage}
               posterTitle="The Grand Budapest Hotel poster"
               className="film-card__poster--big"
             />
 
             <div className="film-card__desc">
-              <FilmMenu currentTab={currentTab} />
+              <FilmMenu />
 
               {
-                currentTab === TabName.Overview &&
-                <FilmOverview />
+                tab === TabName.Overview &&
+                <FilmOverview film={film} />
               }
 
               {
-                currentTab === TabName.Details &&
-                <FilmDetails />
+                tab === TabName.Details &&
+                <FilmDetails film={film} />
               }
 
               {
-                currentTab === TabName.Reviews &&
+                tab === TabName.Reviews &&
                 <FilmReviews />
               }
             </div>
@@ -65,9 +76,7 @@ function Film(): JSX.Element {
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
 
-          <div className="catalog__films-list">
-            {[...Array(4).keys()].map((it) => <FilmCard key={it}/>)}
-          </div>
+          <FilmsList films={similarFilms} />
         </section>
 
         <Footer/>

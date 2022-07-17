@@ -1,14 +1,16 @@
-import {useMatch} from 'react-router-dom';
+import {Link, useMatch} from 'react-router-dom';
 import {RouteName} from '../../constants/route-name';
+import {getAddReviewUrl, getPlayerUrl} from '../../utils/route';
 
 type PosterDescriptionProps = {
+  id: number;
   name: string;
   genre: string;
   releaseDate: number;
 }
 
 function PosterDescription(props: PosterDescriptionProps): JSX.Element {
-  const {name, genre, releaseDate} = props;
+  const {id, name, genre, releaseDate} = props;
   const isFilmPath = useMatch(RouteName.Film);
 
   return (
@@ -20,14 +22,20 @@ function PosterDescription(props: PosterDescriptionProps): JSX.Element {
       </p>
 
       <div className="film-card__buttons">
-        <button className="btn btn--play film-card__button" type="button">
+        <Link
+          to={getPlayerUrl(id)}
+          className="btn btn--play film-card__button"
+          type="button"
+        >
           <svg viewBox="0 0 19 19" width="19" height="19">
             <use xlinkHref="#play-s"/>
           </svg>
           <span>Play</span>
-        </button>
-
-        <button className="btn btn--list film-card__button" type="button">
+        </Link>
+        <button
+          className="btn btn--list film-card__button"
+          type="button"
+        >
           <svg viewBox="0 0 19 20" width="19" height="20">
             <use xlinkHref="#add"/>
           </svg>
@@ -36,7 +44,12 @@ function PosterDescription(props: PosterDescriptionProps): JSX.Element {
         </button>
 
         {isFilmPath &&
-          <button className="btn film-card__button">Add review</button>}
+        <Link
+          to={getAddReviewUrl(id)}
+          className="btn film-card__button"
+        >
+          Add review
+        </Link>}
       </div>
     </div>
   );

@@ -11,3 +11,5 @@ export {default as RatingSelect} from './rating-select/rating-select';
 export {default as FilmOverview} from './film-overview/film-overview';
 export {default as FilmDetails} from './film-details/film-details';
 export {default as FilmReviews} from './film-reviews/film-reviews';
+export {default as FilmsList} from './films-list/films-list';
+export {default as CommentForm} from './comment-form/comment-form';

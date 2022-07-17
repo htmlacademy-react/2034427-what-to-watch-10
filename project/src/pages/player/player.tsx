@@ -1,9 +1,27 @@
+import {Link, Navigate, useParams} from 'react-router-dom';
+import {RouteName} from '../../constants/route-name';
+import {getFilm} from '../../utils/common';
+import {getFilmUrl} from '../../utils/route';
+
 function Player(): JSX.Element {
+  const params = useParams();
+  const film = getFilm(params.id as string);
+
+  if (!film) {
+    return <Navigate to={RouteName.NotFound} />;
+  }
+
+  const {id, previewImage} = film;
+
   return (
     <div className="player">
-      <video src="#" className="player__video" poster="img/player-poster.jpg" />
-
-      <button type="button" className="player__exit">Exit</button>
+      <video src="#" className="player__video" poster={previewImage} />
+      <Link
+        to={getFilmUrl(id)}
+        className="player__exit"
+      >
+        Exit
+      </Link>
 
       <div className="player__controls">
         <div className="player__controls-row">

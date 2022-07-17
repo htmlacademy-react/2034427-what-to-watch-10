@@ -1,29 +1,33 @@
 import React from 'react';
 
-function RatingSelect(): JSX.Element {
-  const ratings = [...Array(11).keys()]
-    .slice(1)
-    .reverse();
+const RATING_LENGTH = 10;
 
+type RatingSelectProps = {
+  rating: number;
+  onChangeRating: (value: string) => void;
+}
+
+function RatingSelect({rating, onChangeRating}: RatingSelectProps): JSX.Element {
   return (
     <div className="rating">
       <div className="rating__stars">
         {
-          ratings.map((item) => (
-            <React.Fragment key={item}>
+          Array.from({length: RATING_LENGTH}, (_, index) => (
+            <React.Fragment key={`rating-${index}`}>
               <input
                 className="rating__input"
-                id={`star-${item}`}
+                id={`star-${RATING_LENGTH - index}`}
                 type="radio"
                 name="rating"
-                value={item}
-                defaultChecked={item === 8}
+                value={rating}
+                onChange={(evt) => onChangeRating(evt.target.value)}
+                defaultChecked={RATING_LENGTH - index === 8}
               />
               <label
                 className="rating__label"
-                htmlFor={`star-${item}`}
+                htmlFor={`star-${RATING_LENGTH - index}`}
               >
-                Rating {item}
+                Rating {RATING_LENGTH - index}
               </label>
             </React.Fragment>
           ))

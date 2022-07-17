@@ -1,25 +1,18 @@
-import {Link, useParams} from 'react-router-dom';
-import {RouteName} from '../../constants/route-name';
+import {Link} from 'react-router-dom';
 import classNames from 'classnames';
+import {RouteName} from '../../constants/route-name';
+import {films} from '../../mocks/films';
+import {getGenres} from '../../utils/common';
+import {getGenreUrl} from '../../utils/route';
 
-function GenreMenu(): JSX.Element {
+const MAX_COUNT_GENRES = 9;
 
-  const genres = [
-    'Comedies',
-    'Crime',
-    'Documentary',
-    'Dramas',
-    'Horror',
-    'Kids & Family',
-    'Romance',
-    'Sci-Fi',
-    'Thrillers'
-  ];
+type GenreMenuProps = {
+  genreName?: string;
+}
 
-  const {genreName} = useParams();
-
-  const getGenreRoute = (genre: string): string =>
-    RouteName.Genre.replace(/:genreName/, genre.toLowerCase());
+function GenreMenu({genreName}: GenreMenuProps): JSX.Element {
+  const genres = getGenres(films);
 
   return (
     <ul className="catalog__genres-list">
@@ -46,13 +39,13 @@ function GenreMenu(): JSX.Element {
             )}
           >
             <Link
-              to={getGenreRoute(genre)}
+              to={getGenreUrl(genre)}
               className="catalog__genres-link"
             >
               {genre}
             </Link>
           </li>
-        ))
+        )).slice(0, MAX_COUNT_GENRES)
       }
     </ul>
   );
