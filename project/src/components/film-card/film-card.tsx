@@ -1,7 +1,10 @@
+import {useEffect, useRef} from 'react';
 import {Link} from 'react-router-dom';
 import classNames from 'classnames';
 import {FilmType} from '../../types/film';
 import {getFilmUrl} from '../../utils/route';
+
+const PLAY_TIMEOUT = 1000;
 
 type FilmCardProps = {
   film: FilmType;
@@ -12,7 +15,25 @@ type FilmCardProps = {
 
 function FilmCard(props: FilmCardProps): JSX.Element {
   const {film, activeCard, onMouseEnter, onMouseLeave} = props;
-  const {id, previewImage, name} = film;
+  const {id, previewImage, previewVideoLink, name} = film;
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (activeCard === id) {
+        videoRef.current?.play();
+      }},
+    PLAY_TIMEOUT
+    );
+
+    if (activeCard !== id) {
+      videoRef.current?.pause();
+    }
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [activeCard, id]);
 
   return (
     <article
@@ -26,14 +47,18 @@ function FilmCard(props: FilmCardProps): JSX.Element {
       onMouseEnter={() => onMouseEnter(id)}
       onMouseLeave={onMouseLeave}
     >
-      <div className="small-film-card__image">
-        <img
-          src={previewImage}
-          alt={name}
-          width="280"
-          height="175"
+      <Link
+        to={getFilmUrl(id)}
+        className="small-film-card__image"
+      >
+        <video
+          src={previewVideoLink}
+          poster={previewImage}
+          loop
+          muted
+          ref={videoRef}
         />
-      </div>
+      </Link>
 
       <h3 className="small-film-card__title">
         <Link
