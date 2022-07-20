@@ -17,7 +17,10 @@ function FilmDetails({film}: FilmDetailsProps): JSX.Element {
         <p className="film-card__details-item">
           <strong className="film-card__details-name">Starring</strong>
           <span className="film-card__details-value">
-            {starring.map((item) => item).join(', ')}
+            {
+              starring.map((item) =>
+                <span key={item} className="starting-row">{item},</span>)
+            }
           </span>
         </p>
       </div>
