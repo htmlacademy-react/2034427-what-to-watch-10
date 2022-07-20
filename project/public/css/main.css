@@ -814,8 +814,12 @@ main {
 
 .film-card__details-value {
   color: #131313; }
+.starting-row {
+  display: block;}
 
 .film-card__reviews {
+  columns: 2;
+  column-gap: 60px;
   padding-top: 20px; }
 
 .film-card__reviews-col {
@@ -1136,6 +1140,7 @@ main {
     transition: color 0.2s; }
 
 .review {
+  break-inside: avoid;
   border-bottom: 2px solid #E8C3C4;
   font-size: 17px;
   color: #252525;
@@ -1145,9 +1150,6 @@ main {
   padding-right: 75px;
   position: relative;
   margin-bottom: 10px; }
-  .review:last-child {
-    margin-bottom: 0px;
-    border-bottom: none; }
 
 .review__quote {
   margin: 0;
