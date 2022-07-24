@@ -1,19 +1,28 @@
+import {useEffect} from 'react';
 import {useParams} from 'react-router-dom';
 import {Footer, GenreMenu, Header, Poster, PosterDescription, FilmsList} from '../../components';
 import {FilmType} from '../../types/film';
+import {useAppDispatch, useAppSelector} from '../../hooks';
+import {selectFilterFilms} from '../../store/reducer';
+import {changeGenre, fetchFilms} from '../../store/actions';
 
 type MainProps = {
   promoFilm: FilmType;
-  films: FilmType[];
 }
 
-function Main({promoFilm, films}: MainProps): JSX.Element {
+function Main({promoFilm}: MainProps): JSX.Element {
   const {id, name, genre, released, posterImage, backgroundImage} = promoFilm;
   const {genreName} = useParams();
+  const dispatch = useAppDispatch();
+  const genreList = useAppSelector(selectFilterFilms);
 
-  const genreList = genreName
-    ? films.filter((item) => item.genre.toLowerCase() === genreName)
-    : films;
+  useEffect(() => {
+    dispatch(fetchFilms());
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(changeGenre(genreName));
+  },[genreName, dispatch]);
 
   return (
     <>

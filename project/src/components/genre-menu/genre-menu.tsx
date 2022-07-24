@@ -1,9 +1,10 @@
 import {Link} from 'react-router-dom';
 import classNames from 'classnames';
 import {RouteName} from '../../constants/route-name';
-import {films} from '../../mocks/films';
 import {getGenres} from '../../utils/common';
 import {getGenreUrl} from '../../utils/route';
+import {useAppSelector} from '../../hooks';
+import {selectFilms} from '../../store/reducer';
 
 const MAX_COUNT_GENRES = 9;
 
@@ -12,6 +13,7 @@ type GenreMenuProps = {
 }
 
 function GenreMenu({genreName}: GenreMenuProps): JSX.Element {
+  const films = useAppSelector(selectFilms);
   const genres = getGenres(films);
 
   return (

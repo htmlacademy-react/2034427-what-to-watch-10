@@ -17,11 +17,11 @@ function App({promoFilm, films, similarFilms}: AppProps): JSX.Element {
   const routes: RouteType[] = [
     {
       path: RouteName.Main,
-      element: <Main promoFilm={promoFilm} films={films}/>
+      element: <Main promoFilm={promoFilm}/>
     },
     {
       path: RouteName.Genre.path,
-      element: <Main promoFilm={promoFilm} films={films}/>
+      element: <Main promoFilm={promoFilm}/>
     },
     {
       path: RouteName.SignIn,
