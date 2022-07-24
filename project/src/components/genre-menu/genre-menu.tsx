@@ -1,20 +1,22 @@
-import {Link} from 'react-router-dom';
+import {useEffect} from 'react';
+import {Link, useParams} from 'react-router-dom';
 import classNames from 'classnames';
 import {RouteName} from '../../constants/route-name';
-import {getGenres} from '../../utils/common';
 import {getGenreUrl} from '../../utils/route';
-import {useAppSelector} from '../../hooks';
-import {selectFilms} from '../../store/reducer';
+import {useAppDispatch, useAppSelector} from '../../hooks';
+import {selectFilmGenres} from '../../store/select';
+import {changeGenre} from '../../store/actions';
 
 const MAX_COUNT_GENRES = 9;
 
-type GenreMenuProps = {
-  genreName?: string;
-}
+function GenreMenu(): JSX.Element {
+  const genres = useAppSelector(selectFilmGenres);
+  const {genreName} = useParams();
+  const dispatch = useAppDispatch();
 
-function GenreMenu({genreName}: GenreMenuProps): JSX.Element {
-  const films = useAppSelector(selectFilms);
-  const genres = getGenres(films);
+  useEffect(() => {
+    dispatch(changeGenre(genreName));
+  },[genreName, dispatch]);
 
   return (
     <ul className="catalog__genres-list">

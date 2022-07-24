@@ -1,12 +1,10 @@
 import {Header, Footer} from '../../components';
-import {FilmType} from '../../types/film';
 import FilmsList from '../../components/films-list/films-list';
+import {useAppSelector} from '../../hooks';
+import {selectFilms} from '../../store/select';
 
-type FavoriteFilmsProps = {
-  films: FilmType[];
-}
-
-function FavoriteFilms({films}: FavoriteFilmsProps): JSX.Element {
+function FavoriteFilms(): JSX.Element {
+  const films = useAppSelector(selectFilms);
   const favoriteFilms = films.filter((item) => item.isFavorite);
   const favoriteCount = favoriteFilms.length;
 

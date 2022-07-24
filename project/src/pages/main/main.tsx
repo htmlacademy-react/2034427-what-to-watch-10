@@ -1,10 +1,9 @@
 import {useEffect} from 'react';
-import {useParams} from 'react-router-dom';
 import {Footer, GenreMenu, Header, Poster, PosterDescription, FilmsList} from '../../components';
 import {FilmType} from '../../types/film';
 import {useAppDispatch, useAppSelector} from '../../hooks';
-import {selectFilterFilms} from '../../store/reducer';
-import {changeGenre, fetchFilms} from '../../store/actions';
+import {selectFilterFilms} from '../../store/select';
+import {fetchFilms} from '../../store/actions';
 
 type MainProps = {
   promoFilm: FilmType;
@@ -12,17 +11,12 @@ type MainProps = {
 
 function Main({promoFilm}: MainProps): JSX.Element {
   const {id, name, genre, released, posterImage, backgroundImage} = promoFilm;
-  const {genreName} = useParams();
   const dispatch = useAppDispatch();
-  const genreList = useAppSelector(selectFilterFilms);
+  const genreFilms = useAppSelector(selectFilterFilms);
 
   useEffect(() => {
     dispatch(fetchFilms());
   }, [dispatch]);
-
-  useEffect(() => {
-    dispatch(changeGenre(genreName));
-  },[genreName, dispatch]);
 
   return (
     <>
@@ -47,9 +41,9 @@ function Main({promoFilm}: MainProps): JSX.Element {
       <div className="page-content">
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
-          <GenreMenu genreName={genreName} />
+          <GenreMenu/>
 
-          <FilmsList films={genreList} />
+          <FilmsList films={genreFilms}/>
 
           <div className="catalog__more">
             <button className="catalog__button" type="button">Show more</button>
