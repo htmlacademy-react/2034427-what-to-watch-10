@@ -1,19 +1,22 @@
-import {useParams} from 'react-router-dom';
+import {useEffect} from 'react';
 import {Footer, GenreMenu, Header, Poster, PosterDescription, FilmsList} from '../../components';
 import {FilmType} from '../../types/film';
+import {useAppDispatch, useAppSelector} from '../../hooks';
+import {selectFilterFilms} from '../../store/select';
+import {fetchFilms} from '../../store/actions';
 
 type MainProps = {
   promoFilm: FilmType;
-  films: FilmType[];
 }
 
-function Main({promoFilm, films}: MainProps): JSX.Element {
+function Main({promoFilm}: MainProps): JSX.Element {
   const {id, name, genre, released, posterImage, backgroundImage} = promoFilm;
-  const {genreName} = useParams();
+  const dispatch = useAppDispatch();
+  const genreFilms = useAppSelector(selectFilterFilms);
 
-  const genreList = genreName
-    ? films.filter((item) => item.genre.toLowerCase() === genreName)
-    : films;
+  useEffect(() => {
+    dispatch(fetchFilms());
+  }, [dispatch]);
 
   return (
     <>
@@ -38,9 +41,9 @@ function Main({promoFilm, films}: MainProps): JSX.Element {
       <div className="page-content">
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
-          <GenreMenu genreName={genreName} />
+          <GenreMenu/>
 
-          <FilmsList films={genreList} />
+          <FilmsList films={genreFilms}/>
 
           <div className="catalog__more">
             <button className="catalog__button" type="button">Show more</button>

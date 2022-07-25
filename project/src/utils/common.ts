@@ -3,7 +3,7 @@ import {films} from '../mocks/films';
 import {TabName} from '../pages/film/film';
 
 export const getGenres = (filmList: FilmType[]): string[] =>
-  [ ...new Set(filmList.map((film) => film.genre))];
+  [...new Set(filmList.map((film) => film.genre))];
 
 export const getFilm = (id: string) =>
   films.find((item) => item.id === parseInt(id, 10));

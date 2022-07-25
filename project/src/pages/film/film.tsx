@@ -1,8 +1,13 @@
 import {Navigate, useParams} from 'react-router-dom';
 import {Header, Footer, Poster, PosterDescription, FilmMenu, FilmDetails, FilmOverview, FilmReviews, FilmsList} from '../../components';
-import {FilmType} from '../../types/film';
 import {RouteName} from '../../constants/route-name';
 import {getFilm, getFilmTab} from '../../utils/common';
+import {useAppDispatch, useAppSelector} from '../../hooks';
+import {selectFilms} from '../../store/select';
+import {fetchFilms} from '../../store/actions';
+import {useEffect} from 'react';
+
+const MAX_COUNT_SIMILAR_FILMS = 4;
 
 export enum TabName {
   Overview = 'overview',
@@ -10,14 +15,17 @@ export enum TabName {
   Reviews = 'reviews',
 }
 
-type FilmProps = {
-  similarFilms: FilmType[],
-}
-
-function Film({similarFilms}: FilmProps): JSX.Element {
+function Film(): JSX.Element {
+  const dispatch = useAppDispatch();
+  const similarFilms = useAppSelector(selectFilms)
+    .slice(0, MAX_COUNT_SIMILAR_FILMS);
   const tab = getFilmTab();
   const params = useParams();
   const film = getFilm(params.id as string);
+
+  useEffect(() => {
+    dispatch(fetchFilms());
+  }, [dispatch]);
 
   if (!film) {
     return <Navigate to={RouteName.NotFound} />;
@@ -76,7 +84,7 @@ function Film({similarFilms}: FilmProps): JSX.Element {
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
 
-          <FilmsList films={similarFilms} />
+          <FilmsList films={similarFilms}/>
         </section>
 
         <Footer/>

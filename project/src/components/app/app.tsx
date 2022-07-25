@@ -8,20 +8,18 @@ import {FilmType} from '../../types/film';
 
 type AppProps = {
   promoFilm: FilmType,
-  films: FilmType[],
-  similarFilms: FilmType[],
 }
 
-function App({promoFilm, films, similarFilms}: AppProps): JSX.Element {
+function App({promoFilm}: AppProps): JSX.Element {
   const authStatus = AuthStatus.Auth;
   const routes: RouteType[] = [
     {
       path: RouteName.Main,
-      element: <Main promoFilm={promoFilm} films={films}/>
+      element: <Main promoFilm={promoFilm}/>
     },
     {
       path: RouteName.Genre.path,
-      element: <Main promoFilm={promoFilm} films={films}/>
+      element: <Main promoFilm={promoFilm}/>
     },
     {
       path: RouteName.SignIn,
@@ -31,13 +29,13 @@ function App({promoFilm, films, similarFilms}: AppProps): JSX.Element {
       path: RouteName.MyList,
       element: (
         <PrivateRoute authStatus={authStatus}>
-          <MyList films={films}/>
+          <MyList/>
         </PrivateRoute>
       )
     },
     {
       path: RouteName.Film.path,
-      element: <Movie similarFilms={similarFilms}/>
+      element: <Movie/>
     },
     {
       path: RouteName.AddReview.path,
