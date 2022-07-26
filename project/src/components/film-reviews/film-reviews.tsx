@@ -1,5 +1,5 @@
 import {comments} from '../../mocks/comments';
-import Review from '../review/review';
+import {Review} from '../';
 
 function FilmReviews(): JSX.Element {
   return (

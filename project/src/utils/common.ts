@@ -1,6 +1,6 @@
 import {FilmType} from '../types/film';
 import {films} from '../mocks/films';
-import {TabName} from '../pages/film/film';
+import {TabName} from '../components/film-card-full/film-card-full';
 
 export const getGenres = (filmList: FilmType[]): string[] =>
   [...new Set(filmList.map((film) => film.genre))];

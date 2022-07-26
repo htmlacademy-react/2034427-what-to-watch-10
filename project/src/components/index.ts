@@ -13,3 +13,8 @@ export {default as FilmDetails} from './film-details/film-details';
 export {default as FilmReviews} from './film-reviews/film-reviews';
 export {default as FilmsList} from './films-list/films-list';
 export {default as CommentForm} from './comment-form/comment-form';
+export {default as ShowMoreButton} from './show-more-button/show-more-button';
+export {default as PromoFilm} from './promo-film/promo-film';
+export {default as FilmCardFull} from './film-card-full/film-card-full';
+export {default as SimilarFilms} from './similar-films/similar-films';
+export {default as Review} from './review/review';

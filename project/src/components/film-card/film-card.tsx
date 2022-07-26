@@ -22,7 +22,8 @@ function FilmCard(props: FilmCardProps): JSX.Element {
     const timer = setTimeout(() => {
       if (activeCard === id) {
         videoRef.current?.play();
-      }},
+      }
+    },
     PLAY_TIMEOUT
     );
 

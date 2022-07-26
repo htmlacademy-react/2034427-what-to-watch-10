@@ -1,7 +1,7 @@
 import {State} from '../types/state';
 import {FilmType} from '../types/film';
-import {DEFAULT_GENRE} from './reducer';
 import {getGenres} from '../utils/common';
+import {DEFAULT_GENRE} from '../constants/common';
 
 export const selectFilms = (state: State) => state.films;
 
