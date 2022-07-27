@@ -8,14 +8,14 @@ function Player(): JSX.Element {
   const film = getFilm(params.id as string);
 
   if (!film) {
-    return <Navigate to={RouteName.NotFound} />;
+    return <Navigate to={RouteName.NotFound}/>;
   }
 
   const {id, previewImage} = film;
 
   return (
     <div className="player">
-      <video src="#" className="player__video" poster={previewImage} />
+      <video src="#" className="player__video" poster={previewImage}/>
       <Link
         to={getFilmUrl(id)}
         className="player__exit"
@@ -26,7 +26,7 @@ function Player(): JSX.Element {
       <div className="player__controls">
         <div className="player__controls-row">
           <div className="player__time">
-            <progress className="player__progress" value="30" max="100" />
+            <progress className="player__progress" value="30" max="100"/>
             <div className="player__toggler" style={{left: '30%'}}>Toggler</div>
           </div>
           <div className="player__time-value">1:30:29</div>
@@ -35,7 +35,7 @@ function Player(): JSX.Element {
         <div className="player__controls-row">
           <button type="button" className="player__play">
             <svg viewBox="0 0 19 19" width="19" height="19">
-              <use xlinkHref="#play-s" />
+              <use xlinkHref="#play-s"/>
             </svg>
             <span>Play</span>
           </button>
@@ -43,7 +43,7 @@ function Player(): JSX.Element {
 
           <button type="button" className="player__full-screen">
             <svg viewBox="0 0 27 27" width="27" height="27">
-              <use xlinkHref="#full-screen" />
+              <use xlinkHref="#full-screen"/>
             </svg>
             <span>Full screen</span>
           </button>

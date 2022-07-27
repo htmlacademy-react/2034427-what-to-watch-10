@@ -1,0 +1,71 @@
+import {Navigate, useParams} from 'react-router-dom';
+import {FilmDetails, FilmMenu, FilmOverview, FilmReviews, Header, Poster, PosterDescription} from '../index';
+import {getFilm, getFilmTab} from '../../utils/common';
+import {RouteName} from '../../constants/route-name';
+
+export enum TabName {
+  Overview = 'overview',
+  Details = 'details',
+  Reviews = 'reviews',
+}
+
+function FilmCardFull(): JSX.Element {
+  const tab = getFilmTab();
+  const params = useParams();
+  const film = getFilm(params.id as string);
+
+  if (!film) {
+    return <Navigate to={RouteName.NotFound}/>;
+  }
+
+  const {id, name, genre, released, posterImage, backgroundImage} = film;
+
+  return (
+    <section className="film-card film-card--full">
+      <div className="film-card__hero">
+        <div className="film-card__bg">
+          <img src={backgroundImage} alt="The Grand Budapest Hotel"/>
+        </div>
+
+        <h1 className="visually-hidden">WTW</h1>
+
+        <Header className="film-card__head"/>
+
+        <div className="film-card__wrap">
+          <PosterDescription id={id} name={name} genre={genre} releaseDate={released}/>
+        </div>
+      </div>
+
+      <div className="film-card__wrap film-card__translate-top">
+        <div className="film-card__info">
+          <Poster
+            posterSrc={posterImage}
+            posterTitle="The Grand Budapest Hotel poster"
+            className="film-card__poster--big"
+          />
+
+          <div className="film-card__desc">
+            <FilmMenu/>
+
+            {
+              tab === TabName.Overview &&
+              <FilmOverview film={film}/>
+            }
+
+            {
+              tab === TabName.Details &&
+              <FilmDetails film={film}/>
+            }
+
+            {
+              tab === TabName.Reviews &&
+              <FilmReviews/>
+            }
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export default FilmCardFull;

@@ -1,53 +1,45 @@
-import {useEffect} from 'react';
-import {Footer, GenreMenu, Header, Poster, PosterDescription, FilmsList} from '../../components';
-import {FilmType} from '../../types/film';
+import {useEffect, useState} from 'react';
+import {Footer, GenreMenu, FilmsList, ShowMoreButton, PromoFilm} from '../../components';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {selectFilterFilms} from '../../store/select';
 import {fetchFilms} from '../../store/actions';
+import {FilmType} from '../../types/film';
+import {DEFAULT_SHOW_FILMS} from '../../constants/common';
 
 type MainProps = {
   promoFilm: FilmType;
 }
 
 function Main({promoFilm}: MainProps): JSX.Element {
-  const {id, name, genre, released, posterImage, backgroundImage} = promoFilm;
   const dispatch = useAppDispatch();
-  const genreFilms = useAppSelector(selectFilterFilms);
+  const [showCount, setShowCount] = useState<number>(DEFAULT_SHOW_FILMS);
+  const filteredFilms = useAppSelector(selectFilterFilms);
 
   useEffect(() => {
     dispatch(fetchFilms());
   }, [dispatch]);
 
+  const getFilmsList = (films: FilmType[]) =>
+    films.slice(0, showCount);
+
   return (
     <>
-      <section className="film-card">
-        <div className="film-card__bg">
-          <img src={backgroundImage} alt={name}/>
-        </div>
-
-        <h1 className="visually-hidden">WTW</h1>
-
-        <Header className="film-card__head"/>
-
-        <div className="film-card__wrap">
-          <div className="film-card__info">
-            <Poster posterSrc={posterImage} posterTitle={name}/>
-
-            <PosterDescription id={id} name={name} genre={genre} releaseDate={released}/>
-          </div>
-        </div>
-      </section>
+      <PromoFilm film={promoFilm}/>
 
       <div className="page-content">
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
-          <GenreMenu/>
+          <GenreMenu changeShowCount={setShowCount}/>
 
-          <FilmsList films={genreFilms}/>
+          <FilmsList films={getFilmsList(filteredFilms)}/>
 
-          <div className="catalog__more">
-            <button className="catalog__button" type="button">Show more</button>
-          </div>
+          {
+            filteredFilms.length > showCount &&
+            <ShowMoreButton
+              showCount={showCount}
+              changeShowCount={setShowCount}
+            />
+          }
         </section>
 
         <Footer/>

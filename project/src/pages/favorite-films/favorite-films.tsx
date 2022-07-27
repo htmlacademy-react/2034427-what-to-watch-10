@@ -21,10 +21,10 @@ function FavoriteFilms(): JSX.Element {
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-        <FilmsList films={favoriteFilms} />
+        <FilmsList films={favoriteFilms}/>
       </section>
 
-      <Footer />
+      <Footer/>
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import {Link} from 'react-router-dom';
 import classNames from 'classnames';
-import {TabName} from '../../pages/film/film';
 import {getFilmTab} from '../../utils/common';
+import {TabName} from '../film-card-full/film-card-full';
 
 function FilmMenu(): JSX.Element {
   const tab = getFilmTab();

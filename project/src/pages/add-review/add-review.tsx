@@ -1,5 +1,5 @@
-import {Header, Poster, CommentForm} from '../../components';
 import {Link, Navigate, useParams} from 'react-router-dom';
+import {Header, Poster, CommentForm} from '../../components';
 import {RouteName} from '../../constants/route-name';
 import {getAddReviewUrl, getFilmUrl} from '../../utils/route';
 import {getFilm} from '../../utils/common';
@@ -9,7 +9,7 @@ function AddReview(): JSX.Element {
   const film = getFilm(params.id as string);
 
   if (!film) {
-    return <Navigate to={RouteName.NotFound} />;
+    return <Navigate to={RouteName.NotFound}/>;
   }
 
   const {id, name, posterImage} = film;
@@ -53,7 +53,7 @@ function AddReview(): JSX.Element {
         />
       </div>
 
-      <CommentForm />
+      <CommentForm/>
     </section>
   );
 }

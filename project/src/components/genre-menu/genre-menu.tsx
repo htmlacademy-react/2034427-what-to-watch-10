@@ -6,17 +6,21 @@ import {getGenreUrl} from '../../utils/route';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {selectFilmGenres} from '../../store/select';
 import {changeGenre} from '../../store/actions';
+import {DEFAULT_SHOW_FILMS, MAX_COUNT_GENRES} from '../../constants/common';
 
-const MAX_COUNT_GENRES = 9;
+type GenreMenuProps = {
+  changeShowCount: (value: number) => void;
+}
 
-function GenreMenu(): JSX.Element {
+function GenreMenu({changeShowCount}: GenreMenuProps): JSX.Element {
   const genres = useAppSelector(selectFilmGenres);
   const {genreName} = useParams();
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(changeGenre(genreName));
-  },[genreName, dispatch]);
+    changeShowCount(DEFAULT_SHOW_FILMS);
+  }, [genreName, dispatch, changeShowCount]);
 
   return (
     <ul className="catalog__genres-list">
