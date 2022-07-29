@@ -1,12 +1,10 @@
-import {FilmType} from '../../types/film';
 import {Header, Poster, PosterDescription} from '../index';
+import {useAppSelector} from '../../hooks';
+import {selectPromoFilm} from '../../store/select';
 
-type PromoFilmProps = {
-  film: FilmType;
-}
-
-function PromoFilm({film}: PromoFilmProps) {
-  const {id, name, genre, released, posterImage, backgroundImage} = film;
+function PromoFilm() {
+  const promoFilm = useAppSelector(selectPromoFilm);
+  const {id, name, genre, released, posterImage, backgroundImage} = promoFilm;
 
   return (
     <section className="film-card">

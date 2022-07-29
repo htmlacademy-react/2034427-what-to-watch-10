@@ -3,7 +3,11 @@ import {FilmType} from '../types/film';
 import {getGenres} from '../utils/common';
 import {DEFAULT_GENRE} from '../constants/common';
 
+export const selectIsDataLoaded = (state: State) => state.isDataLoaded;
+
 export const selectFilms = (state: State) => state.films;
+
+export const selectPromoFilm = (state: State) => state.promoFilm;
 
 export const selectFilterFilms = (state: State) =>
   state.genre !== DEFAULT_GENRE
