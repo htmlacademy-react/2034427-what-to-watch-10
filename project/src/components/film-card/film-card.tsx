@@ -58,6 +58,8 @@ function FilmCard(props: FilmCardProps): JSX.Element {
           loop
           muted
           ref={videoRef}
+          width={270}
+          height={175}
         />
       </Link>
 

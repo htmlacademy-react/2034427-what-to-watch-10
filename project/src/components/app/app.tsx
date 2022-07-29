@@ -4,22 +4,21 @@ import {PrivateRoute} from '../';
 import {RouteName} from '../../constants/route-name';
 import {AuthStatus} from '../../constants/auth-status';
 import {RouteType} from '../../types/route-type';
-import {FilmType} from '../../types/film';
+import {useAppSelector} from '../../hooks';
+import {selectIsDataLoaded} from '../../store/select';
+import Loader from '../loader/loader';
 
-type AppProps = {
-  promoFilm: FilmType,
-}
-
-function App({promoFilm}: AppProps): JSX.Element {
+function App(): JSX.Element {
   const authStatus = AuthStatus.Auth;
+  const isDataLoaded = useAppSelector(selectIsDataLoaded);
   const routes: RouteType[] = [
     {
       path: RouteName.Main,
-      element: <Main promoFilm={promoFilm}/>
+      element: <Main/>
     },
     {
       path: RouteName.Genre.path,
-      element: <Main promoFilm={promoFilm}/>
+      element: <Main/>
     },
     {
       path: RouteName.SignIn,
@@ -54,6 +53,10 @@ function App({promoFilm}: AppProps): JSX.Element {
       element: <NotFound/>
     },
   ];
+
+  if (isDataLoaded) {
+    return <Loader/>;
+  }
 
   return (
     <BrowserRouter>
